@@ -4,9 +4,10 @@
     <b-container class="bv-example-row">
       <b-row cols="3" >
       <b-card 
+      
       header="Total Cases"
       header-tag="header">
-        <b-card-text>
+        <b-card-text style="background-color:black">
         {{getData.cases | number}}
         </b-card-text>
       </b-card>
