@@ -1,12 +1,37 @@
 <template>
   <div>
-   <h1>Hello</h1>
-   {{data}}
+   <h1></h1>
+    <b-container class="bv-example-row">
+      <b-row cols="3" >
+      <b-card 
+      header="Total Cases"
+      header-tag="header">
+        <b-card-text>
+        {{getData.cases | number}}
+        </b-card-text>
+      </b-card>
+        <b-card
+      header="Total Deaths"
+      header-tag="header">
+        <b-card-text variant="success">
+        {{getData.deaths | number}}
+        </b-card-text>
+      </b-card>
+       <b-card
+      header="Total Recoved"
+      header-tag="header">
+        <b-card-text variant="success">
+        {{getData.recovered | number}}
+        </b-card-text>
+      </b-card>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+
+import {mapActions} from 'vuex';
 export default {
   name: 'HelloWorld',
   data () {
@@ -14,24 +39,13 @@ export default {
      data:''
     }
   },
-  methods:{
-    getAllCases(){
-      axios.get('https://corona.lmao.ninja/all')
-      .then((res)=>{
-       this.data = res.data
-      })
-      .catch(error=>{
-        console.error('Notworking')
-      })
+  computed: {
+    getData(){
+      return this.$store.getters.data
     }
   },
-  created(){
-    this.getAllCases();
-  }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

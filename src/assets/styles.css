@@ -1,0 +1,15 @@
+#app {
+  margin-top: 10px;
+  /* Zoom Problem */
+  /* zoom: 100%;
+  width: 1920px; */
+}
+body{
+  background-color: #F4F0EE;
+  /* font-family: 'Source Sans Pro', sans-serif; */
+  font-family: Georgia, serif;
+  color: #4C5C68;
+}
+.success{
+    background-color:#7DBBBC;
+}

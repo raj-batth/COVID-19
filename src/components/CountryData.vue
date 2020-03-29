@@ -1,0 +1,131 @@
+<template>
+<div  class="mx-auto" >
+    <b-form-group class="m-1">
+    <b-input-group style="width:40%;float:right;margin-right:50px;">
+        <b-form-input
+        v-model="filter"
+        type="search"
+        id="filterInput"
+        placeholder="Type to Search"
+        ></b-form-input>
+    </b-input-group>
+    </b-form-group>
+    <b-table
+        :busy="isBusy"
+        class="mx-auto"
+        striped hover
+        show-empty
+        responsive = "sm"
+        :items="items"
+        :fields="fields"
+        style="width:90%"
+        :filter = "filter"
+        head-variant="dark" 
+    >
+    <template v-slot:table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>Loading...</strong>
+        </div>
+      </template>
+    </b-table>
+</div>
+</template>
+<script>
+import axios from 'axios'
+export default {
+    data(){
+        return{
+            isBusy: true,
+            fields: [
+                {
+                    key: 'name',
+                    sortable: true,
+                    label:'Country'
+                },
+                {
+                    key: 'totalCases',
+                    sortable: true,
+                    label:'Total Cases',
+                    class:'text-right',
+                },
+                {
+                    key: 'newCases',
+                    sortable: true,
+                    label:'New Cases',
+                    class:'text-right',
+                    variant: 'warning'
+
+                },
+                {
+                    key: 'totalDeaths',
+                    sortable: true,
+                    label:'Total Deaths',
+                    class:'text-right',
+                   
+                },
+                {
+                    key: 'todayDeaths',
+                    sortable: true,
+                    label:'New Deaths',
+                    class:'text-right',
+                    variant: 'danger'
+                },
+                {
+                    key: 'totalRecovered',
+                    sortable: true,
+                    label:'Total Recovered',
+                    class:'text-right'
+                },
+                {
+                    key: 'active',
+                    sortable: true,
+                    label:'Active Cases',
+                    class:'text-right'
+                },
+                {
+                    key: 'critical',
+                    sortable: true,
+                    label:'Critical Cases',
+                    class:'text-right'
+                }
+            ],
+            items:[],
+            filter:null,
+        }
+    },
+    methods:{
+      getCountriesData(){
+            // let items = []
+            return axios.get('https://corona.lmao.ninja/countries')
+            .then((res)=>{
+                console.log(res.data)
+                const totalRows = res.data.length
+                for(var i = 0 ; i < totalRows; i++){
+                    this.items = this.items.concat([
+                        {
+                            'name': res.data[i].country.toLocaleString() , 
+                            'totalCases': res.data[i].cases,
+                            'newCases': res.data[i].todayCases,
+                            'totalDeaths' : res.data[i].deaths,
+                            'todayDeaths' : res.data[i].todayDeaths,
+                            'totalRecovered' : res.data[i].recovered,
+                            'active' : res.data[i].active,
+                            'critical' : res.data[i].critical
+                        }])
+                }
+                // this.items.sort(function(a, b){
+                //     return a.totalCases-b.totalCases
+                // })
+            }).finally(()=>{this.isBusy = false})
+            .catch(error=>{
+                console.log(error)
+            })
+        },
+    },
+    mounted(){
+        this.getCountriesData()
+    }
+
+}
+</script>
