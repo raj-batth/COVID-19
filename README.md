@@ -1,10 +1,15 @@
-# covid-19
 
-> Displaying crona virus cases live
+# COVID-19
+> Displaying Novel Crona virus cases live
+> Working Live at : [https://covid-19-com.herokuapp.com/](https://covid-19-com.herokuapp.com/)
+
+## Sources
+> BackEnd API used:
+> https://github.com/novelcovid/api
 
 ## Build Setup
-
 ``` bash
+
 # install dependencies
 npm install
 
@@ -13,15 +18,3 @@ npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
