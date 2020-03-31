@@ -2,33 +2,7 @@
   <div>
    <h1></h1>
     <b-container class="bv-example-row">
-      <b-row cols="3" >
-      <b-card 
-      style="background-color:#D1ECF0"
-      header="Total Cases"
-      header-tag="header">
-        <b-card-text>
-        {{getData.cases}}
-        </b-card-text>
-      </b-card>
-        <b-card
-      style="background-color:#F5C6CB"
-      header="Total Deaths"
-      header-tag="header">
-        <b-card-text variant="success">
-        {{getData.deaths}}
-        </b-card-text>
-      </b-card>
-       <b-card
-      style="background-color:#D4EDDA"
-      header="Recoved"
-      header-tag="header">
-        <b-card-text variant="success">
-        {{getData.recovered}}
-        </b-card-text>
-      </b-card>
-      </b-row>
-
+      <case-death-recovered :cases = "getData.cases" :deaths = "getData.deaths" :recovered = "getData.recovered" ></case-death-recovered>
       <div class="small my-5">
         <line-chart :chart-data="datacollection" :options="chartOptions"></line-chart>
       </div>
@@ -41,16 +15,18 @@
 import {mapActions} from 'vuex';
 import LineChart from '../charts/charts'
 import axios from 'axios'
+import CaseDeathRecovered from './CaseDeathRecovered'
 export default {
   components: {
-      LineChart
+      LineChart,
+      CaseDeathRecovered
     },
   data () {
     return {
      data:'',
      datacollection: null,
      chartOptions: null,
-     loaded:false
+     loaded:false,
     }
   },
   computed: {
@@ -58,7 +34,8 @@ export default {
       return this.$store.getters.data
     }
   },
-  async mounted () {
+  mounted () {
+    
     try {
       axios.get('https://corona.lmao.ninja/v2/historical/all')
         .then((res)=>{
@@ -67,12 +44,20 @@ export default {
             datasets: [
               {
                 label: 'Total Cases',
-                backgroundColor: '#D1ECF0',
+                borderColor: "#05CBE1",
+                pointBackgroundColor: "#257590",
+                pointBorderColor: "#257590",
+                borderWidth: 1,
+                backgroundColor: "#D1ECF0",
                 data:Object.values(res.data.cases)
               },
               {
                 label: 'Total Deaths',
                 backgroundColor: '#F5C6CB',
+                pointBackgroundColor: "red",
+                borderWidth: 1,
+                pointBorderColor: "red",
+                backgroundColor: "#F5C6CB",
                 data: Object.values(res.data.deaths)
               },
             ],

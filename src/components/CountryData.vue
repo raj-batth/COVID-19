@@ -24,11 +24,16 @@
     >
     <template v-slot:table-busy>
         <div class="text-center text-danger my-2">
-          <b-spinner class="align-middle"></b-spinner>
-          <strong>Loading...</strong>
+            <b-spinner class="align-middle"></b-spinner>
+            <strong>Loading...</strong>
         </div>
-      </template>
-    </b-table>
+    </template>
+  <template v-slot:cell(name)="item">
+    <b-button size="sm" class="mr-1" :to="`/country/${item.item.name}`">
+        {{item.item.name}}
+    </b-button>
+    </template>
+</b-table>
 </div>
 </template>
 <script>
@@ -96,10 +101,8 @@ export default {
     },
     methods:{
       getCountriesData(){
-            // let items = []
             return axios.get('https://corona.lmao.ninja/countries')
             .then((res)=>{
-                console.log(res.data)
                 const totalRows = res.data.length
                 for(var i = 0 ; i < totalRows; i++){
                     this.items = this.items.concat([
@@ -114,9 +117,6 @@ export default {
                             'critical' : res.data[i].critical
                         }])
                 }
-                // this.items.sort(function(a, b){
-                //     return a.totalCases-b.totalCases
-                // })
             }).finally(()=>{this.isBusy = false})
             .catch(error=>{
                 console.log(error)
