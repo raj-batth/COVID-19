@@ -16,7 +16,7 @@ const mutations = {
 
 const actions = {
     'GET_DATA'({commit}){
-        return axios.get('https://corona.lmao.ninja/all')
+        return axios.get('https://corona.lmao.ninja/v2/all')
         .then((res)=>{
             commit('SET_DATA', res.data)
         })

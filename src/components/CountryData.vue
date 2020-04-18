@@ -101,22 +101,20 @@ export default {
     },
     methods:{
       getCountriesData(){
-            return axios.get('https://corona.lmao.ninja/countries')
+            return axios.get('https://corona.lmao.ninja/v2/countries')
             .then((res)=>{
-                const totalRows = res.data.length
-                for(var i = 0 ; i < totalRows; i++){
-                    this.items = this.items.concat([
-                        {
-                            'name': res.data[i].country.toLocaleString() , 
-                            'totalCases': res.data[i].cases,
-                            'newCases': res.data[i].todayCases,
-                            'totalDeaths' : res.data[i].deaths,
-                            'todayDeaths' : res.data[i].todayDeaths,
-                            'totalRecovered' : res.data[i].recovered,
-                            'active' : res.data[i].active,
-                            'critical' : res.data[i].critical
-                        }])
-                }
+               this.items = res.data.map(resultRow=>({
+                'name': resultRow.country.toLocaleString() ,
+                'totalCases' : resultRow.cases,
+                'newCases' : resultRow.todayCases,
+                'totalDeaths'  : resultRow.deaths,
+                'todayDeaths'  : resultRow.todayDeaths,
+                'totalRecovered'  : resultRow.recovered,
+                'active'  : resultRow.active,
+                'critical'  : resultRow.critical
+               }))
+
+               console.log(res.data)
             }).finally(()=>{this.isBusy = false})
             .catch(error=>{
                 console.log(error)
