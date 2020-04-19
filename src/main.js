@@ -7,11 +7,10 @@ import store from './store/store'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-// Vue.use(axios)
 
+axios.defaults.baseURL = 'https://corona.lmao.ninja/v2/'
 
 Vue.filter('number',(value)=>{
   return value.toLocaleString();

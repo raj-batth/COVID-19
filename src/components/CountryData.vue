@@ -101,7 +101,7 @@ export default {
     },
     methods:{
       getCountriesData(){
-            return axios.get('https://corona.lmao.ninja/v2/countries')
+            return axios.get('countries')
             .then((res)=>{
                this.items = res.data.map(resultRow=>({
                 'name': resultRow.country.toLocaleString() ,

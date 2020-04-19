@@ -84,14 +84,14 @@ export default {
     },
     async mounted () {
         try {
-            axios.get(`https://corona.lmao.ninja/v2/countries/${this.$route.params.name}`)
+            axios.get(`countries/${this.$route.params.name}`)
                 .then((res)=>{
                 this.data = res.data
                 }).finally(()=>{this.loading = true})
                 .catch(error=>{
                 console.log(error)
             })
-            axios.get(`https://corona.lmao.ninja/v2/historical/${this.$route.params.name}`)
+            axios.get(`historical/${this.$route.params.name}`)
                 .then((res)=>{
                 this.datacollection = {
                     labels: Object.keys(res.data.timeline.cases),
@@ -133,7 +133,7 @@ export default {
                 console.log(error)
             })
             if(this.$route.params.name == 'USA'){
-                axios.get(`https://corona.lmao.ninja/v2/states`)
+                axios.get(`states`)
                     .then((res)=>{   
                     this.items = res.data.map(resultRow=>({
                     'name': resultRow.state ,
@@ -144,30 +144,9 @@ export default {
                     .catch(error=>{
                         console.log(error)
                 })
-            }else if(this.$route.params.name == 'India'){
-                // axios.get(`https://api.covid19india.org/v2/state_district_wise.json`)
-                axios.get(`https://api.covid19india.org/data.json`)
-                .then((res)=>{   
-                // this.items = res.data.statewise.map(resultRow=>({
-                // 'name': resultRow.state ,
-                // // 'totalCases' : resultRow.deltaconfirmed,
-                // // 'totalDeaths' : resultRow.deltadeaths,
-                // // 'totalCases' : resultRow.deltaconfirmed+
-                // 'totalDeaths'  : res.data.statewise.reduce(function(prev, cur) {
-                //                 return prev + cur.deltadeaths;
-                //                 }, 0),
-                // }))
-                // this.items = res.data.statewise.reduce(function(prev, cur) {
-
-                //                 // return prev + cur.deltadeaths;
-                //                 }, 0),
-
-                }).finally(()=>{this.isBusy = false})
-                .catch(error=>{
-                    console.log(error)
-            })
-            }else{
-                axios.get(`https://corona.lmao.ninja/v2/jhucsse`)
+            }
+            else{
+                axios.get(`jhucsse`)
                 .then((res)=>{ 
                     const totalRows = res.data.length
                     for(var i = 0 ; i < totalRows; i++){

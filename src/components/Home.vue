@@ -37,7 +37,7 @@ export default {
   mounted () {
     
     try {
-      axios.get('https://corona.lmao.ninja/v2/historical/all')
+      axios.get('historical/all')
         .then((res)=>{
           this.datacollection = {
             labels: Object.keys(res.data.cases),
